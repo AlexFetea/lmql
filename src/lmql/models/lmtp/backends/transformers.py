@@ -1,4 +1,4 @@
-from transformers import AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoProcessor, LlavaForConditionalGeneration
 from typing import Tuple
 import torch
 from lmql.models.lmtp.backends.lmtp_model import LMTPModel, LMTPModelResult, TokenStreamer
@@ -9,9 +9,9 @@ class TransformersLLM(LMTPModel):
         self.model_identifier = model_identifier
         self.model_args = kwargs
 
-        print("[Loading", self.model_identifier, "with", f"AutoModelForCausalLM.from_pretrained({self.model_identifier}, {str(self.model_args)[1:-1]})]", flush=True)
+        print("[Loading", self.model_identifier, "with", f"LlavaForConditionalGeneration.from_pretrained({self.model_identifier}, {str(self.model_args)[1:-1]})]", flush=True)
         
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_identifier, **kwargs)
+        self.model = LlavaForConditionalGeneration.from_pretrained(self.model_identifier, **kwargs)
         
         print("[", self.model_identifier, " ready on device ", self.model.device, 
         flush=True, sep="", end="]\n")
